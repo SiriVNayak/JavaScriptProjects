@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FromData</title>
+  </head>
+  <body>
+    <form id="myForm" onsubmit=" return onFromSubmit(event.preventDefault())">
+      <div>
+        <label for="productCode">Product Code:</label>
+        <input type="text" name="productCode" id="productCode" />
+      </div>
+      <br />
+      <div>
+        <label for="product">Product Name:</label>
+        <input type="text" name="product" id="product" />
+      </div>
+      <br />
+      <div>
+        <label for="qty">Qty:</label>
+        <input type="number" name="qty" id="qty" />
+      </div>
+      <br />
+      <div>
+        <label for="perprice">Price:</label>
+        <input type="number" name="perprice" id="perprice" />
+      </div>
+      <br />
+
+      <div class="form-action-btn">
+        <input type="submit" value="Submit" />
+        <input type="reset" value="Reset" />
+      </div>
+    </form>
+    <br />
+    <table>
+      <thead>
+        <tr>
+          <th>product Code</th>
+          <th>product Name</th>
+          <th>Qty</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody class="tbody"></tbody>
+    </table>
+    <script>
+      var array = [];
+
+      function onFromSubmit() {
+        // store data in object name from data
+        var fromData = {};
+        var selectedRow=null;
+
+        fromData["productCode"] = document.getElementById("productCode").value;
+        fromData["product"] = document.getElementById("product").value;
+        fromData["qty"] = document.getElementById("qty").value;
+        fromData["perprice"] = document.getElementById("perprice").value;
+
+        array.push(fromData);
+        // Call the createTable function to generate the table
+        createTable();
+
+        document.getElementById("myForm").reset();
+      }
+
+      function createTable() {
+        const tbody = document.querySelector(".tbody");
+
+        let html = "";
+        for (let i = 0; i < array.length; i++) {
+          html += `<tr>
+                      <td>${array[i].productCode}</td>
+                      <td>${array[i].product}</td>
+                      <td>${array[i].qty}</td>
+                      <td>${array[i].perprice}</td>
+                      <td>
+                      <button onClick ='onEdit(this)'>Edit</button>
+                      <button onClick ='onDelete(this)'>Delete</button></td>
+                      </tr> 
+                      `;
+        }
+
+        // array.forEach((item) => {
+
+        // });
+        // console.log(html);
+        tbody.innerHTML = html;
+      }
+      //  edit and update from data
+      function onEdit(id1) {
+        selectedRow=id1.parentNode.parentNode;
+        
+
+      }
+
+      //  delete button code
+      function onDelete(id) {
+        // console.log(id); how to get refrence
+        id.parentNode.parentNode.remove();
+      }
+      // edit
+    </script>
+  </body>
+</html>
